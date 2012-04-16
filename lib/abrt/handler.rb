@@ -46,10 +46,11 @@ private
       socket.close
 
       parts = response.split
+      code = Integer(parts[1]) rescue false
       if (parts.size < 2) or
         (not parts[0] =~ %r{^HTTP/}) or
-        (not (Integer(parts[1]) rescue false)) or
-        (parts[1].to_i >= 400)
+        (not code) or
+        (code >= 400)
       then
         if response.empty?
           syslog.err "error sending data to ABRT daemon. Empty response received"
