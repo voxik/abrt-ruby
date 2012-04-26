@@ -38,7 +38,7 @@ private
       socket.write "ANALYZER=Python\0"
       socket.write "BASENAME=rbhook\0"
       socket.write "REASON=#{backtrace.first}\0"
-      socket.write "BACKTRACE=#{backtrace}\0"
+      socket.write "BACKTRACE=#{backtrace.join("\n")}\0"
       socket.close_write
 
       response = socket.read
