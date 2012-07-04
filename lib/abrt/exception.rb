@@ -1,3 +1,5 @@
+# This might be removed if http://bugs.ruby-lang.org/issues/6286 gets accepted.
+
 module ABRT
   module Exception
     def format
