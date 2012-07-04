@@ -1,9 +1,12 @@
+require 'socket'
+require 'syslog'
+require 'abrt/exception.rb'
+
 module ABRT
 
   def self.handle_exception(exception)
     syslog.notice "detected unhandled Ruby exception in '#{$0}'"
 
-    require 'abrt/exception.rb'
     exception.extend(ABRT::Exception)
 
     # TODO: Report only scripts with absolute path.
@@ -16,13 +19,11 @@ private
   def self.syslog
     return @syslog if @syslog
 
-    require 'syslog'
     @syslog = Syslog.open 'abrt'
   end
 
   def self.write_dump(backtrace)
     begin
-      require 'socket'
 
       # TODO: Get var_run from ABRT configuration.
       var_run = "/var/run"
