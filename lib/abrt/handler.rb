@@ -1,16 +1,14 @@
 module ABRT
 
   def self.handle_exception(exception)
-    last_exception = $!
-
     syslog.notice "detected unhandled Ruby exception in '#{$0}'"
 
     require 'abrt/exception.rb'
-    last_exception.extend(ABRT::Exception)
+    exception.extend(ABRT::Exception)
 
     # TODO: Report only scripts with absolute path.
 
-    write_dump last_exception.format
+    write_dump exception.format
   end
 
 private
