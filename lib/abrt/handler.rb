@@ -17,9 +17,7 @@ module ABRT
 private
 
   def self.syslog
-    return @syslog if @syslog
-
-    @syslog = Syslog.open 'abrt'
+    @syslog ||= Syslog.open 'abrt'
   end
 
   def self.write_dump(backtrace)
