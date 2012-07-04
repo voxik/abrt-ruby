@@ -1,5 +1,5 @@
 at_exit do
-  if $! && !($!.is_a? SystemExit)
+  if $! and ![SystemExit, Interrupt].include?($!.class)
     require 'abrt/handler'
     ABRT.handle_exception($!)
   end
