@@ -10,11 +10,13 @@ Please note that ABRT will be able to report errors only for applications which 
 $ gem install abrt
 </tt>
 
-or if you're using Bundler, write following line into your Gemfile
+or if you're using Bundler, put
 
 <tt>
 gem "mocha", :require => false
 </tt>
+
+line into your <em>Gemfile</em>.
 
 == Usage
 
@@ -22,9 +24,9 @@ There are several ways how to run any application with ABRT handler enabled.
 
 1. Use <tt>require 'abrt'</tt> at the beginning of your application.
 2. If you can't modify the application and you still want to use ABRT support, then you need to define <tt>RUBYOPT="-rabrt"</tt> environment variable. This will ensure that ABRT support gets loaded and the exception handler hooks are installed.
-3. If you want to ensure, that ABRT handler is always used, add RUBYOPT="-rabrt" into your .bashrc file. This will ensure, that Ruby loads ABRT handler every time its starts.
+3. If you want to ensure, that ABRT handler is always used, add <tt>RUBYOPT="-rabrt"</tt> into your <em>.bashrc</em> file. This will ensure, that Ruby loads ABRT handler every time its starts.
 
-Now, everytime the unhandled exception is captured, ABRT handler prepares bugreport, which can be later submitted using standard ABRT tools.
+Now, everytime the unhandled exception is captured, ABRT handler prepares bugreport, which can be submitted into bugzilla.redhat.com component later using standard ABRT tools.
 
 == Contributing to abrt
  
