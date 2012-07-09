@@ -6,8 +6,9 @@ Gem::Specification.new do |s|
 
   s.authors = ["Vít Ondruch"]
   s.email = "v.ondruch@tiscali.cz"
-  s.summary = "ABRT support for Ruby MRI."
-  s.description = "Provides ABRT reporting support for applications written using Ruby."
+
+  s.summary = "ABRT support for Ruby."
+  s.description = "Provides ABRT reporting support for libraries/applications written using Ruby."
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
