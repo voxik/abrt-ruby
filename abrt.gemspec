@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     Dir["lib/**/*"],
+    Dir["config/*"],
   ].flatten
   s.homepage = "http://github.com/voxik/abrt-ruby"
   s.licenses = ["MIT"]

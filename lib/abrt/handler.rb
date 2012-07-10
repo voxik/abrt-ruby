@@ -24,9 +24,7 @@ private
     io.write "PUT / HTTP/1.1\r\n\r\n"
     io.write "PID=#{Process.pid}\0"
     io.write "EXECUTABLE=#{$PROGRAM_NAME}\0"
-    # TODO: Do we need specialized Ruby analyzer?
-    # io.write "ANALYZER=Ruby\0"
-    io.write "ANALYZER=Python\0"
+    io.write "ANALYZER=Ruby\0"
     io.write "BASENAME=rbhook\0"
     io.write "REASON=#{backtrace.first}\0"
     io.write "BACKTRACE=#{backtrace.join("\n")}\0"
