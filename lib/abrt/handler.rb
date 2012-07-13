@@ -9,9 +9,8 @@ module ABRT
 
     exception.extend(ABRT::Exception)
 
-    # TODO: Report only scripts with absolute path.
-
-    write_dump exception.format
+    # Report only scripts with absolute path.
+    write_dump(exception.format) if exception.backtrace.last[0] == '/'
   end
 
 private

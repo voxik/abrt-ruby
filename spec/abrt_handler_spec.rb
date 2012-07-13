@@ -51,6 +51,25 @@ describe "ABRT" do
       abrt.handle_exception exception
     end
 
+    it "ignores executables with relative path" do
+      abrt.should_not_receive(:write_dump)
+
+      exception.set_backtrace("./foo.rb:2:in `<main>'")
+
+      abrt.handle_exception exception
+    end
+
+    it "ignores oneline scripts" do
+      abrt.should_not_receive(:write_dump)
+
+      exception.set_backtrace([
+        "-e:1:in `/'",
+        "-e:1:in `<main>'"
+      ])
+
+      abrt.handle_exception exception
+    end
+
     context "logs error into syslog when" do
       it "receive empty response" do
         abrt.should_receive(:abrt_socket).and_return(io)
