@@ -9,9 +9,22 @@ describe "ABRT" do
           "/foo/bar.rb:3:in `block in func'",
           "/foo/bar.rb:2:in `each'",
           "/foo/bar.rb:2:in `func'",
-          "foo.rb:2:in `<main>'"
+          "/foo.rb:2:in `<main>'"
         ])
       end
+    end
+
+    let(:exception_report) do
+      "PUT / HTTP/1.1\r\n\r\n" +
+      "PID=#{Process.pid}\u0000" +
+      "EXECUTABLE=/usr/bin/rspec\u0000" +
+      "ANALYZER=Ruby\u0000" +
+      "BASENAME=rbhook\u0000" +
+      "REASON=/foo/bar.rb:3:in `block in func': baz (RuntimeError)\u0000" +
+      "BACKTRACE=/foo/bar.rb:3:in `block in func': baz (RuntimeError)\n" +
+        "\tfrom /foo/bar.rb:2:in `each'\n" +
+        "\tfrom /foo/bar.rb:2:in `func'\n" +
+        "\tfrom /foo.rb:2:in `<main>'\u0000"
     end
 
     let(:abrt) do
@@ -30,16 +43,7 @@ describe "ABRT" do
 
       abrt.handle_exception exception
 
-      io.string.should == "PUT / HTTP/1.1\r\n\r\n" +
-        "PID=#{Process.pid}\u0000" +
-        "EXECUTABLE=/usr/bin/rspec\u0000" +
-        "ANALYZER=Ruby\u0000" +
-        "BASENAME=rbhook\u0000" +
-        "REASON=/foo/bar.rb:3:in `block in func': baz (RuntimeError)\u0000" +
-        "BACKTRACE=/foo/bar.rb:3:in `block in func': baz (RuntimeError)\n" +
-          "\tfrom /foo/bar.rb:2:in `each'\n" +
-          "\tfrom /foo/bar.rb:2:in `func'\n" +
-          "\tfrom foo.rb:2:in `<main>'\u0000"
+      io.string.should == exception_report
     end
 
     it "logs unhandled exception message into syslog" do
