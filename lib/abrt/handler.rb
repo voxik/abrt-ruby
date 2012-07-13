@@ -23,7 +23,7 @@ private
   def self.report(backtrace, io = abrt_socket)
     io.write "PUT / HTTP/1.1\r\n\r\n"
     io.write "PID=#{Process.pid}\0"
-    io.write "EXECUTABLE=#{$PROGRAM_NAME}\0"
+    io.write "EXECUTABLE=#{backtrace.last[/from (.*?):/, 1]}\0"
     io.write "ANALYZER=Ruby\0"
     io.write "BASENAME=rbhook\0"
     io.write "REASON=#{backtrace.first}\0"
