@@ -47,7 +47,7 @@ describe "ABRT" do
     end
 
     it "logs unhandled exception message into syslog" do
-      syslog.should_receive(:notice).with("detected unhandled Ruby exception in '/usr/bin/rspec'")
+      syslog.should_receive(:notice).with("detected unhandled Ruby exception in '/foo.rb'")
       abrt.handle_exception exception
     end
 

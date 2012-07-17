@@ -5,12 +5,12 @@ require 'abrt/exception.rb'
 module ABRT
 
   def self.handle_exception(exception)
-    syslog.notice "detected unhandled Ruby exception in '#{$0}'"
-
     exception.extend(ABRT::Exception)
 
+    syslog.notice "detected unhandled Ruby exception in '#{exception.executable}'"
+
     # Report only scripts with absolute path.
-    write_dump(exception.format) if exception.backtrace.last[0] == '/'
+    write_dump(exception) if exception.backtrace.last[0] == '/'
   end
 
 private
@@ -19,14 +19,14 @@ private
     @syslog ||= Syslog.open 'abrt'
   end
 
-  def self.report(backtrace, io = abrt_socket)
+  def self.report(exception, io = abrt_socket)
     io.write "PUT / HTTP/1.1\r\n\r\n"
     io.write "PID=#{Process.pid}\0"
-    io.write "EXECUTABLE=#{backtrace.last[/from (.*?):/, 1]}\0"
+    io.write "EXECUTABLE=#{exception.executable}\0"
     io.write "ANALYZER=Ruby\0"
     io.write "BASENAME=rbhook\0"
-    io.write "REASON=#{backtrace.first}\0"
-    io.write "BACKTRACE=#{backtrace.join("\n")}\0"
+    io.write "REASON=#{exception.format.first}\0"
+    io.write "BACKTRACE=#{exception.format.join("\n")}\0"
     io.close_write
 
     yield io.read
@@ -36,8 +36,8 @@ private
     syslog.err "can't communicate with ABRT daemon, is it running? #{e.message}"
   end
 
-  def self.write_dump(backtrace)
-    report backtrace do |response|
+  def self.write_dump(exception)
+    report exception do |response|
       if response.empty?
         syslog.err "error sending data to ABRT daemon. Empty response received"
       else
