@@ -9,5 +9,11 @@ module ABRT
       backtrace[0] = "#{self.backtrace.first}: #{self.message} (#{self.class.name})"
       backtrace
     end
+
+    # Obtains executable name from backtrace. This should be more reliable then
+    # use of $0 aka $PROGRAM_NAME.
+    def executable
+      backtrace.last[/(.*?):/, 1]
+    end
   end
 end
