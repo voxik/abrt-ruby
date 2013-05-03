@@ -13,7 +13,7 @@ $ gem install abrt
 or if you're using Bundler, put
 
 <tt>
-gem "mocha", :require => false
+gem "abrt", :require => false
 </tt>
 
 line into your <em>Gemfile</em>.
