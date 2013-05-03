@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
 
-  s.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
+  s.add_development_dependency(%q<rspec>, ["~> 2.8"])
 end
 
