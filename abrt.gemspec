@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/voxik/abrt-ruby"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
+  s.signing_key = File.expand_path("~/.ssh/voxik-private_key.pem")
+  s.cert_chain = ["voxik-public_cert.pem"]
 
   s.add_development_dependency(%q<rspec>, ["~> 2.8"])
 end
