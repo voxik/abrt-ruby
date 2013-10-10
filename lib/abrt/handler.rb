@@ -24,6 +24,7 @@ private
     io.write "PID=#{Process.pid}\0"
     io.write "EXECUTABLE=#{exception.executable}\0"
     io.write "ANALYZER=Ruby\0"
+    io.write "TYPE=Ruby\0"
     io.write "BASENAME=rbhook\0"
     io.write "REASON=#{exception.format.first}\0"
     io.write "BACKTRACE=#{exception.format.join("\n")}\0"
