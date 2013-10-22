@@ -19,6 +19,7 @@ describe "ABRT" do
       "PID=#{Process.pid}\u0000" +
       "EXECUTABLE=/foo.rb\u0000" +
       "ANALYZER=Ruby\u0000" +
+      "TYPE=Ruby\u0000" +
       "BASENAME=rbhook\u0000" +
       "REASON=/foo/bar.rb:3:in `block in func': baz (RuntimeError)\u0000" +
       "BACKTRACE=/foo/bar.rb:3:in `block in func': baz (RuntimeError)\n" +
