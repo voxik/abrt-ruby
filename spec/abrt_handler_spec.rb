@@ -34,7 +34,7 @@ describe "ABRT" do
       ABRT
     end
 
-    let(:syslog) { mock("syslog").as_null_object }
+    let(:syslog) { double("syslog").as_null_object }
     let(:io) { StringIO.new }
 
     it "handles exceptions" do
