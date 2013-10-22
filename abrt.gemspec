@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = "abrt"
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.authors = ["Vít Ondruch"]
   s.email = "v.ondruch@tiscali.cz"
