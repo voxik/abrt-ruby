@@ -34,7 +34,7 @@ private
 
     io.close
   rescue StandardError => e
-    syslog.err "can't communicate with ABRT daemon, is it running? #{e.message}"
+    syslog.err "%s", "can't communicate with ABRT daemon, is it running? #{e.message}"
   end
 
   def self.write_dump(exception)
@@ -49,7 +49,7 @@ private
           (not code) or
           (code >= 400)
         then
-          syslog.err "error sending data to ABRT daemon: #{response}"
+          syslog.err "%s", "error sending data to ABRT daemon: #{response}"
         end
       end
     end

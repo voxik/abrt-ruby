@@ -34,7 +34,12 @@ describe "ABRT" do
       ABRT
     end
 
-    let(:syslog) { double("syslog").as_null_object }
+    let(:syslog) do
+      double("syslog").as_null_object.tap do |syslog|
+        allow(syslog).to receive(:err).with("%s", anything)
+      end
+    end
+
     let(:io) { StringIO.new }
 
     it "handles exceptions" do
@@ -82,7 +87,7 @@ describe "ABRT" do
       it "receive malformed response" do
         expect(abrt).to receive(:abrt_socket).and_return(io)
         expect(io).to receive(:read).and_return("foo")
-        expect(syslog).to receive(:err).with("error sending data to ABRT daemon: foo")
+        expect(syslog).to receive(:err).with("%s", "error sending data to ABRT daemon: foo")
 
         abrt.handle_exception exception
       end
@@ -90,13 +95,13 @@ describe "ABRT" do
       it "receive error code" do
         expect(abrt).to receive(:abrt_socket).and_return(io)
         expect(io).to receive(:read).and_return("HTTP/1.1 400 \r\n\r\n")
-        expect(syslog).to receive(:err).with("error sending data to ABRT daemon: HTTP/1.1 400 \r\n\r\n")
+        expect(syslog).to receive(:err).with("%s", "error sending data to ABRT daemon: HTTP/1.1 400 \r\n\r\n")
 
         abrt.handle_exception exception
       end
 
       it "can't communicate with ABRT daemon" do
-        expect(syslog).to receive(:err).with("can't communicate with ABRT daemon, is it running? undefined method `write' for nil:NilClass")
+        expect(syslog).to receive(:err).with("%s", "can't communicate with ABRT daemon, is it running? undefined method `write' for nil:NilClass")
         abrt.handle_exception exception
       end
     end
