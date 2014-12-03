@@ -16,7 +16,7 @@ describe "ABRT::Exception" do
 
   describe "#format" do
     it "provides the formated exception message" do
-      exception.format.should == [
+      expect(exception.format) == [
         "/foo/bar.rb:3:in `block in func': baz (RuntimeError)",
           "\tfrom /foo/bar.rb:2:in `each'",
           "\tfrom /foo/bar.rb:2:in `func'",
@@ -27,7 +27,7 @@ describe "ABRT::Exception" do
 
   describe "#executable" do
     it "gets executable from backtrace" do
-      exception.executable.should == "/foo.rb"
+      expect(exception.executable) == "/foo.rb"
     end
   end
 
