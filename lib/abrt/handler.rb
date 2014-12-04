@@ -22,12 +22,12 @@ private
   def self.report(exception, io = abrt_socket)
     io.write "PUT / HTTP/1.1\r\n\r\n"
     io.write "PID=#{Process.pid}\0"
-    io.write "EXECUTABLE=#{exception.executable}\0"
+    io.write "EXECUTABLE=#{exception.executable.gsub(/\u0000/, '')}\0"
     io.write "ANALYZER=Ruby\0"
     io.write "TYPE=Ruby\0"
     io.write "BASENAME=rbhook\0"
-    io.write "REASON=#{exception.format.first}\0"
-    io.write "BACKTRACE=#{exception.format.join("\n")}\0"
+    io.write "REASON=#{exception.format.first.gsub(/\u0000/, '')}\0"
+    io.write "BACKTRACE=#{exception.format.join("\n").gsub(/\u0000/, '')}\0"
     io.close_write
 
     yield io.read

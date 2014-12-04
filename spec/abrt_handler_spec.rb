@@ -28,6 +28,14 @@ describe "ABRT" do
         "\tfrom /foo.rb:2:in `<main>'\u0000"
     end
 
+    let(:null_byte_injection_exception) do
+      RuntimeError.new("baz\u0000bar").tap do |e|
+        e.set_backtrace([
+          "/foo\u0000.rb:2:in `<main>'\u0000INJECTION=injected"
+        ])
+      end
+    end
+
     let(:abrt) do
       allow(ABRT).to receive(:syslog).and_return(syslog)
       allow(ABRT).to receive(:abrt_socket).and_return(nil)
@@ -50,6 +58,17 @@ describe "ABRT" do
       abrt.handle_exception exception
 
       expect(io.string).to eq(exception_report)
+    end
+
+    it "does not suffer null byte injection" do
+      expect(abrt).to receive(:abrt_socket).and_return(io)
+      expect(io).to receive(:read).and_return("HTTP/1.1 201 \r\n\r\n")
+      expect(io).to receive(:write).at_least(1).times do |arg|
+        expect(arg =~ /\u0000/).to be_nil.or be >= arg.size - 1
+      end
+      expect(syslog).to_not receive(:err)
+
+      abrt.handle_exception null_byte_injection_exception
     end
 
     it "logs unhandled exception message into syslog" do
