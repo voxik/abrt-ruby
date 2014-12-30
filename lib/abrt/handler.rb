@@ -10,7 +10,7 @@ module ABRT
     syslog.notice "detected unhandled Ruby exception in '#{exception.executable}'"
 
     # Report only scripts with absolute path.
-    write_dump(exception) if exception.backtrace.last[0] == '/'
+    write_dump(exception) if exception.backtrace.last[0,1] == '/'
   end
 
 private
