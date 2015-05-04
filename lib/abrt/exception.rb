@@ -13,7 +13,7 @@ module ABRT
     # Obtains executable name from backtrace. This should be more reliable then
     # use of $0 aka $PROGRAM_NAME.
     def executable
-      backtrace.last[/(.*?):/, 1]
+      backtrace && backtrace.last && backtrace.last[/(.*?):/, 1] || $PROGRAM_NAME
     end
   end
 end

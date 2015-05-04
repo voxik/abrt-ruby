@@ -27,7 +27,30 @@ describe "ABRT::Exception" do
 
   describe "#executable" do
     it "gets executable from backtrace" do
-      expect(exception.executable) == "/foo.rb"
+      expect(exception.executable).to eq("/foo.rb")
+    end
+
+    describe "fallbacks to $PROGRAM_NAME" do
+      before do
+        @orig_program_name = $PROGRAM_NAME
+        $PROGRAM_NAME = "/bar.rb"
+      end
+
+      after do
+        $PROGRAM_NAME = @orig_program_name
+      end
+
+      it "when backtrace is empty" do
+        exception.set_backtrace([])
+
+        expect(exception.executable).to eq("/bar.rb")
+      end
+
+      it "backtrace is not defined" do
+        exception.set_backtrace(nil)
+
+        expect(exception.executable).to eq("/bar.rb")
+      end
     end
   end
 
