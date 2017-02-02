@@ -1,6 +1,6 @@
 require 'socket'
 require 'syslog'
-require 'abrt/exception.rb'
+require File.join(File.dirname(__FILE__), 'exception')
 
 module ABRT
 
