@@ -26,6 +26,6 @@ Gem::Specification.new do |s|
   s.signing_key = File.expand_path("~/.ssh/voxik-private_key.pem")
   s.cert_chain = ["voxik-public_cert.pem"]
 
-  s.add_development_dependency(%q<rspec>, ["~> 2.8"])
+  s.add_development_dependency(%q<rspec>, ["~> 3.5"])
 end
 
