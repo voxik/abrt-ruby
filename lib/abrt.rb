@@ -1,4 +1,3 @@
-
 at_exit do
   # Do not report every exception:
   #   SystemExit - raised by Kernel#exit call
