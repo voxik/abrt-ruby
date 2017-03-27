@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/voxiky/abrt-ruby.svg?branch=master)](https://travis-ci.org/voxik/abrt-ruby)
+{rdoc-image:https://travis-ci.org/voxiky/abrt-ruby.svg?branch=master}[https://travis-ci.org/voxik/abrt-ruby]
 
 = abrt
 
