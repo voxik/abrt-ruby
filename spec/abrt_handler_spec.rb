@@ -119,9 +119,27 @@ describe "ABRT" do
         abrt.handle_exception exception
       end
 
-      it "can't communicate with ABRT daemon" do
-        expect(syslog).to receive(:err).with("%s", "can't communicate with ABRT daemon, is it running? undefined method `write' for nil:NilClass")
-        abrt.handle_exception exception
+      context "can't communicate with ABRT daemon" do
+        it "due to non-existing socket" do
+          socket_path = 'some/non/existing/path/to/socket'
+          expect(abrt).to receive(:abrt_socket).and_wrap_original do |original_method, *args, &block|
+            args << socket_path
+            original_method.call(*args)
+          end
+          expect(syslog).to receive(:err).with("%s", /can't communicate with ABRT daemon, is it running\? No such file or directory -( connect\(2\) for)? #{socket_path}/)
+          abrt.handle_exception exception
+        end
+
+        it "because no-one is listeing on the other side" do
+          # This file is not correct UNIX socket, so it should be usable for the test.
+          socket_path = __FILE__
+          expect(abrt).to receive(:abrt_socket).and_wrap_original do |original_method, *args, &block|
+            args << __FILE__
+            original_method.call(*args)
+          end
+          expect(syslog).to receive(:err).with("%s", /can't communicate with ABRT daemon, is it running\? Connection refused -( connect\(2\) for)? #{socket_path}/)
+          abrt.handle_exception exception
+        end
       end
     end
   end

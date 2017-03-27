@@ -19,7 +19,9 @@ private
     @syslog ||= Syslog.open 'abrt'
   end
 
-  def self.report(exception, io = abrt_socket)
+  def self.report(exception, io = nil)
+    io ||= abrt_socket
+
     io.write "PUT / HTTP/1.1\r\n\r\n"
     io.write "PID=#{Process.pid}\0"
     io.write "EXECUTABLE=#{exception.executable.gsub(/\u0000/, '')}\0"
@@ -59,8 +61,8 @@ private
   VAR_RUN = '/var/run'
   ABRT_SOCKET_PATH = File.join VAR_RUN, 'abrt/abrt.socket'
 
-  def self.abrt_socket
-    UNIXSocket.new ABRT_SOCKET_PATH
+  def self.abrt_socket(path = ABRT_SOCKET_PATH)
+    UNIXSocket.new path
   end
 
 end
