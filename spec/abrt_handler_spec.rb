@@ -126,7 +126,7 @@ describe "ABRT" do
             args << socket_path
             original_method.call(*args)
           end
-          expect(syslog).to receive(:err).with("%s", /can't communicate with ABRT daemon, is it running\? No such file or directory -( connect\(2\) for)? #{socket_path}/)
+          expect(syslog).to receive(:err).with("%s", /can't communicate with ABRT daemon, is it running\? No such file or directory -( connect\(2\) for)? "?#{socket_path}"?/)
           abrt.handle_exception exception
         end
 
@@ -137,7 +137,7 @@ describe "ABRT" do
             args << __FILE__
             original_method.call(*args)
           end
-          expect(syslog).to receive(:err).with("%s", /can't communicate with ABRT daemon, is it running\? Connection refused -( connect\(2\) for)? #{socket_path}/)
+          expect(syslog).to receive(:err).with("%s", /can't communicate with ABRT daemon, is it running\? Connection refused -( connect\(2\) for)? "?#{socket_path}"?/)
           abrt.handle_exception exception
         end
       end
