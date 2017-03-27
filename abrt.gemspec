@@ -11,11 +11,11 @@ Gem::Specification.new do |s|
   s.description = "Provides ABRT reporting support for libraries/applications written using Ruby."
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     Dir["lib/**/*"],
     Dir["config/*"],
