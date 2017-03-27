@@ -7,7 +7,9 @@ rvm:
   - "2.3.3"
   - "2.4.0"
   - "ruby-head"
-script: bundle exec rake
+env:
+script: rake
 matrix:
   allow_failures:
     - rvm: 1.8.7
+      env: RUBYOPT=rubygems
