@@ -5,7 +5,7 @@ at_exit do
   #   SystemExit - raised by Kernel#exit call
   #   Interrupt - typically issued because the user pressed Ctrl+C
   if exception and ![SystemExit, Interrupt].include?(exception.class)
-    require File.join(File.dirname(__FILE__), 'abrt/handler')
+    require_relative 'abrt/handler'
     ABRT.handle_exception(exception)
   end
 end
