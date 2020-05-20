@@ -1,6 +1,6 @@
 require 'socket'
 require 'syslog'
-require File.join(File.dirname(__FILE__), 'exception')
+require_relative 'exception'
 
 module ABRT
 
