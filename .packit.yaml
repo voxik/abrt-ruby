@@ -1,0 +1,12 @@
+specfile_path: ci/rubygem-abrt.spec
+jobs:
+- job: tests
+  trigger: pull_request
+  metadata:
+    targets:
+    - fedora-all
+actions:
+  create-archive:
+  -  bash -c "gem build *.gemspec; mv -f *.gem ci/; ls ci/*.gem"
+  fix-spec-file:
+  - 'true'
