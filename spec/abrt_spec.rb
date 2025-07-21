@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 describe 'ABRT' do
   context "handles exception in 'abrt.rb' with RubyGems" do
     abrt_rb = File.join(File.dirname(__FILE__), '../lib/abrt.rb')
-    output_message_pattern = /\A#{abrt_rb}:\d+:in `<main>': can't modify frozen Array(: \[1, 2, 3\])? \((FrozenError|RuntimeError)\)\n\Z/
+    output_message_pattern = /\A#{abrt_rb}:\d+:in [`']<main>': can't modify frozen Array(: \[1, 2, 3\])? \((FrozenError|RuntimeError)\)\n\Z/
 
     it 'disabled' do
       expect { system "ruby --disable-gems #{abrt_rb}" }
