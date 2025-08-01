@@ -20,6 +20,11 @@ gem "abrt", :require => false
 
 line into your *Gemfile*.
 
+### Dependencies
+
+This library is `logger` utility from util-linux for logging purposes. Please
+make sure it is available on your system for proper functionality.
+
 ## Usage
 
 There are several ways how to run any application with ABRT handler enabled.
