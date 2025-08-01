@@ -1,5 +1,5 @@
 require 'socket'
-require 'syslog'
+require_relative 'util_linux_logger'
 require_relative 'exception'
 
 module ABRT
@@ -16,7 +16,7 @@ module ABRT
 private
 
   def self.syslog
-    @syslog ||= Syslog.open 'abrt'
+    @syslog ||= UtilLinuxLogger.open 'abrt'
   end
 
   def self.report(exception, io = nil)
