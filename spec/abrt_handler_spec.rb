@@ -132,13 +132,16 @@ describe "ABRT" do
 
         it "because no-one is listeing on the other side" do
           # This file is not correct UNIX socket, so it should be usable for the test.
-          socket_path = __FILE__
-          expect(abrt).to receive(:abrt_socket).and_wrap_original do |original_method, *args, &block|
-            args << __FILE__
-            original_method.call(*args)
+          require 'tempfile'
+          Tempfile.create do |tf|
+            socket_path = tf.path
+            expect(abrt).to receive(:abrt_socket).and_wrap_original do |original_method, *args, &block|
+              args << tf.path
+              original_method.call(*args)
+            end
+            expect(syslog).to receive(:err).with("%s", /can't communicate with ABRT daemon, is it running\? Connection refused -( connect\(2\) for)? "?#{socket_path}"?/)
+            abrt.handle_exception exception
           end
-          expect(syslog).to receive(:err).with("%s", /can't communicate with ABRT daemon, is it running\? Connection refused -( connect\(2\) for)? "?#{socket_path}"?/)
-          abrt.handle_exception exception
         end
       end
     end
