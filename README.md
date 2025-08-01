@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/voxik/abrt-ruby.svg?branch=master)](https://travis-ci.org/voxik/abrt-ruby)
-
 # abrt
 
 Provides ABRT reporting support for libraries/applications written using Ruby.
